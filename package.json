@@ -1,5 +1,5 @@
 {
-	"name": "@mikode/tsconfig",
+	"name": "@mikode13/tsconfig",
 	"version": "0.1.0",
 	"description": "Shared strict TypeScript configuration for MiKode projects",
 	"license": "SEE LICENSE IN LICENSE",
