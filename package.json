@@ -1,0 +1,42 @@
+{
+	"name": "@mikode/tsconfig",
+	"version": "0.1.0",
+	"description": "Shared strict TypeScript configuration for MiKode projects",
+	"license": "SEE LICENSE IN LICENSE",
+	"type": "module",
+	"packageManager": "pnpm@11.17.0",
+	"engines": {
+		"node": "^22.13.0 || ^24.0.0"
+	},
+	"files": [
+		"base.json",
+		"node.json",
+		"browser.json",
+		"react.json"
+	],
+	"exports": {
+		"./base": "./base.json",
+		"./node": "./node.json",
+		"./browser": "./browser.json",
+		"./react": "./react.json"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mikode13/tsconfig.git"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"preinstall": "npx only-allow pnpm",
+		"format": "prettier . --write",
+		"format:check": "prettier . --check",
+		"lint": "eslint .",
+		"test": "echo \"no tests yet\" && exit 0"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.19.0",
+		"eslint": "^10.0.0",
+		"prettier": "^3.4.2"
+	}
+}

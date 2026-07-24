@@ -1,0 +1,11 @@
+node_modules/
+dist/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
