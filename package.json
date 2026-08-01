@@ -28,7 +28,7 @@
 		"access": "public"
 	},
 	"scripts": {
-		"preinstall": "npx only-allow pnpm",
+		"prepare": "node scripts/verify-pnpm.mjs",
 		"format": "prettier . --write",
 		"format:check": "prettier . --check",
 		"lint": "eslint .",
