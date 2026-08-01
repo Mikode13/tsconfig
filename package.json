@@ -28,15 +28,16 @@
 		"access": "public"
 	},
 	"scripts": {
-		"preinstall": "npx only-allow pnpm",
+		"prepare": "node scripts/verify-pnpm.mjs",
 		"format": "prettier . --write",
 		"format:check": "prettier . --check",
 		"lint": "eslint .",
 		"test": "echo \"no tests yet\" && exit 0"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.19.0",
-		"eslint": "^10.0.0",
-		"prettier": "^3.4.2"
+		"@eslint/js": "10.0.1",
+		"@mikode13/code-style": "0.1.0",
+		"eslint": "10.8.0",
+		"prettier": "3.9.6"
 	}
 }
