@@ -42,6 +42,6 @@ jobs:
       checks: read
       contents: write
       id-token: write
-    uses: Mikode13/.github/.github/workflows/release.yml@949cce8df7aeb72fbd3f657e0b4efe08a51626a5
+    uses: Mikode13/.github/.github/workflows/release.yml@b9403230cf37a5ecdfc6a4d7b829f1c815e7e9ff
     with:
       sha: ${{ github.event_name == 'workflow_dispatch' && inputs.sha || github.event.workflow_run.head_sha }}
