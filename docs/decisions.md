@@ -50,29 +50,27 @@ Cross-project decisions live in
   mutation: adding `strictNullChecks: false` to `base.json` fails eight tests across all
   four presets, and removing `noUncheckedIndexedAccess` fails twelve.
 
-## Leave the npm Trusted Publisher environment field blank for the first release
+## Leave the npm Trusted Publisher environment field blank
 
 - **Decision**: The Trusted Publisher entry for this package leaves the environment field
-  blank, following the pinned central workflow's documented contract. This repository is
-  the canary that settles what npm actually validates.
-- **Context**: npm documents the field only as "Environment name (optional): If using
-  GitHub environments for deployment protection", and says nothing about what omitting it
-  means. "Optional" is the usual way of expressing "no constraint when omitted", so blank
-  is expected to publish successfully whether or not the token carries an environment
-  claim. It does carry one: the release job is the only job in the chain that declares an
-  environment, and GitHub emits the `environment` claim only when a job declares one, so
-  the value is `npm`. Setting the field to `npm` was considered and rejected: it would
-  only be safer under the unusual reading that a blank field requires the claim to be
-  absent, and it contradicts the central contract on reasoning rather than evidence.
-- **Consequences**: If the first release authenticates, blank is confirmed to work with a
-  `workflow_call` setup that declares an environment, and the central README can record
-  that. If it fails at the publish step, set the field to `npm`, delete the `v1.0.0` tag,
-  and re-run the manual dispatch; nothing reaches npm on that path, so the version stays
-  reusable. Either outcome must be written back to the central README, because every
-  later MiKode package depends on the answer.
+  blank, following the central workflow's documented contract.
+- **Context**: Before the first real release, npm documented the field only as
+  "Environment name (optional): If using GitHub environments for deployment protection"
+  and did not explain what omitting it meant for a reusable `workflow_call`. The
+  `v1.0.0` release was used as the canary. Its package-scoped OIDC exchange succeeded
+  with the field blank, and the final attempt published successfully with provenance.
+  Earlier attempts failed later for unrelated reasons: first because
+  `@semantic-release/npm` did not persist an npm credential for `npm publish`, then
+  because provenance compared the lowercase repository owner against GitHub's canonical
+  casing.
+- **Consequences**: Leaving the field blank is now proven to work when the reusable
+  release job declares a GitHub environment. Future MiKode packages should follow this
+  contract unless npm changes its validation. The central workflow documentation records
+  the production evidence.
 
-  The `npm` GitHub environment in this repository is required regardless, because the
-  reusable release job declares `environment: npm`. That is unrelated to npm's own field.
+  The `npm` GitHub environment in this repository remains required because the reusable
+  release job declares `environment: npm`. That is unrelated to npm's own Trusted
+  Publisher field.
 
 ## Match `repository.url` to the canonical GitHub owner casing
 
