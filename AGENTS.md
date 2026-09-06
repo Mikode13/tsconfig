@@ -42,8 +42,9 @@ pnpm run pack:check # asserts the exact published file set
 
 ### Hazards
 
-- Never add a lifecycle script npm runs during `pack` or `publish`. One did, and it broke
-  publication outright; see [`docs/decisions.md`](docs/decisions.md).
+- Never add package-manager enforcement to a lifecycle script that npm runs during
+  `pack` or `publish`. One did, and it broke publication outright; see
+  [`docs/decisions.md`](docs/decisions.md).
 - Changing a preset changes published policy. The compile fixtures in
   `tests/integration/` will fail if a preset stops enforcing a MiKode-owned invariant,
   and the TypeScript standard must be updated in the same change.
