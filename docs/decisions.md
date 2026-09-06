@@ -73,3 +73,19 @@ Cross-project decisions live in
 
   The `npm` GitHub environment in this repository is required regardless, because the
   reusable release job declares `environment: npm`. That is unrelated to npm's own field.
+
+## Match `repository.url` to the canonical GitHub owner casing
+
+- **Decision**: `repository.url` uses the exact casing GitHub reports for the repository,
+  `Mikode13`, not the lowercase `mikode13` that also resolves.
+- **Context**: GitHub treats owner names case-insensitively and redirects, so the
+  lowercase form worked everywhere and looked harmless. npm's provenance verification
+  does not: it compares the normalized `repository.url` against the repository recorded in
+  the signed attestation, and rejected the publish with
+  `422 ... "repository.url" is "git+https://github.com/mikode13/tsconfig.git", expected to
+match "https://github.com/Mikode13/tsconfig" from provenance`. The failure only appears
+  once provenance is enabled, and only at the publish step, which is after the release tag
+  has been pushed.
+- **Consequences**: The casing is load-bearing and must not be "tidied" to lowercase.
+  Every other MiKode package carried the same lowercase form and will hit this the first
+  time it publishes with provenance.

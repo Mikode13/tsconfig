@@ -22,7 +22,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/mikode13/tsconfig.git"
+		"url": "git+https://github.com/Mikode13/tsconfig.git"
 	},
 	"publishConfig": {
 		"access": "public"
