@@ -1,7 +1,7 @@
-import js from '@eslint/js';
+import codeQuality from '@mikode13/code-quality/base';
 
 export default [
-	js.configs.recommended,
+	...codeQuality,
 	{
 		ignores: ['base.json', 'node.json', 'browser.json', 'react.json'],
 	},

@@ -1,6 +1,6 @@
 {
 	"name": "@mikode13/tsconfig",
-	"version": "0.1.0",
+	"version": "0.0.0-development",
 	"description": "Shared strict TypeScript configuration for MiKode projects",
 	"license": "SEE LICENSE IN LICENSE",
 	"type": "module",
@@ -28,16 +28,26 @@
 		"access": "public"
 	},
 	"scripts": {
-		"prepare": "node scripts/verify-pnpm.mjs",
+		"prepare": "mikode-git-hooks install",
 		"format": "prettier . --write",
 		"format:check": "prettier . --check",
-		"lint": "eslint .",
-		"test": "echo \"no tests yet\" && exit 0"
+		"lint": "eslint . --max-warnings 0",
+		"lint:fix": "eslint . --fix",
+		"typecheck": "tsc --noEmit && tsc --noEmit -p tests",
+		"test": "pnpm run test:integration",
+		"test:integration": "vitest run --project integration",
+		"check": "pnpm run format:check && pnpm run lint && pnpm run typecheck",
+		"pack:check": "node scripts/pack-check.mjs"
 	},
 	"devDependencies": {
-		"@eslint/js": "10.0.1",
+		"@mikode13/code-quality": "0.1.0",
 		"@mikode13/code-style": "0.1.0",
+		"@mikode13/git-hooks": "0.1.0",
+		"@types/node": "24.13.3",
+		"@types/react": "19.2.2",
 		"eslint": "10.8.0",
-		"prettier": "3.9.6"
+		"prettier": "3.9.6",
+		"typescript": "6.0.3",
+		"vitest": "4.1.10"
 	}
 }

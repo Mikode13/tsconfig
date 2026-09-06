@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  ci:
+    name: CI
+    # MiKode CI v2.0.0 (capability-composed)
+    uses: Mikode13/.github/.github/workflows/ci.yml@813d80713d5aa375023421674719267028aa01e5
+    with:
+      # Source: this repository ships consumable technical configuration (base.json and
+      # its variants) plus its own eslint config, all in scope for the code-quality rules.
+      source: true
+      # Tests: this repository publishes consumable technical configuration, which the
+      # testing standard places in scope; tests/integration verifies the presets it ships.
+      tests: true
+      # Package: this repository publishes an npm package, so the tarball needs artifact
+      # validation before release.
+      package: true
+      # Build, Documentation and End-to-end stay off: there is no build step and no
+      # documentation invariant beyond the README. Enabling either would require a
+      # placeholder that always succeeds, which the CI standard forbids.
