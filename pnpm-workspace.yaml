@@ -1,3 +1,9 @@
 minimumReleaseAgeExclude:
   - brace-expansion@5.0.8
   - eslint@10.8.0
+
+allowBuilds:
+  # A MiKode-owned package whose lifecycle script has no consumer-facing build purpose.
+  '@mikode13/code-quality': false
+  # Native resolver used by the shared config's import rules; it needs its own build.
+  unrs-resolver: true

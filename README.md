@@ -1,11 +1,11 @@
-# @mikode/tsconfig
+# @mikode13/tsconfig
 
 Shared strict TypeScript configuration for MiKode projects.
 
 ## Install
 
 ```sh
-pnpm add -D @mikode/tsconfig
+pnpm add -D @mikode13/tsconfig
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ Extend the variant that matches your project in `tsconfig.json`:
 
 ```json
 {
-	"extends": "@mikode/tsconfig/node",
+	"extends": "@mikode13/tsconfig/node",
 	"compilerOptions": {
 		"outDir": "dist"
 	},
@@ -24,10 +24,10 @@ Extend the variant that matches your project in `tsconfig.json`:
 
 Available entry points:
 
-- `@mikode/tsconfig/base` — shared strictness options, no environment.
-- `@mikode/tsconfig/node` — Node.js libraries and services.
-- `@mikode/tsconfig/browser` — browser or universal code without JSX.
-- `@mikode/tsconfig/react` — React code (extends `browser`).
+- `@mikode13/tsconfig/base` — shared strictness options, no environment.
+- `@mikode13/tsconfig/node` — Node.js libraries and services.
+- `@mikode13/tsconfig/browser` — browser or universal code without JSX.
+- `@mikode13/tsconfig/react` — React code (extends `browser`).
 
 See the [TypeScript standard](https://github.com/mikode13/engineering/blob/main/standards/typescript.md)
 in `mikode-engineering` for the policy this package implements.

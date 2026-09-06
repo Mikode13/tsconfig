@@ -9,3 +9,6 @@ dist/
 # OS
 .DS_Store
 Thumbs.db
+
+# Managed by @mikode13/git-hooks
+.husky/_/
