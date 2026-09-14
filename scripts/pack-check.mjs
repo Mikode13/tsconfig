@@ -1,5 +1,6 @@
-import { spawnSync } from 'node:child_process';
+import { runPackageManager } from '@mikode13/cross-platform';
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 
 /**
  * The Package capability must verify artifact contents, not merely produce a dry-run
@@ -8,19 +9,23 @@ import process from 'node:process';
  * leaking a development file all fail here, before release.
  */
 
-const packageDirectory = new URL('../', import.meta.url);
+const packageDirectory = fileURLToPath(new URL('../', import.meta.url));
 
-const result = spawnSync('pnpm', ['pack', '--dry-run', '--json'], {
-	cwd: packageDirectory,
-	encoding: 'utf8',
-});
+// `runPackageManager` spawns the package manager through its own entry point, so the check
+// also runs on Windows, where `pnpm` is a `.cmd` shim that `execFile` refuses to execute.
+let stdout;
 
-if (result.status !== 0) {
-	process.stderr.write(result.stderr);
-	process.exit(result.status ?? 1);
+try {
+	({ stdout } = await runPackageManager(['pack', '--dry-run', '--json'], {
+		cwd: packageDirectory,
+	}));
+} catch (error) {
+	// The package manager explains its own failure better than a stack trace does.
+	process.stderr.write(error.stderr ?? `${error.message}\n`);
+	process.exit(typeof error.code === 'number' ? error.code : 1);
 }
 
-const report = JSON.parse(result.stdout);
+const report = JSON.parse(stdout);
 const packed = new Set(report.files.map(file => file.path));
 
 // Every file a consumer is entitled to receive, and nothing else.
